@@ -4,16 +4,16 @@ namespace Enqueue\Tactician;
 
 use Interop\Amqp\AmqpContext;
 use Interop\Amqp\AmqpQueue;
-use Interop\Queue\PsrContext;
-use Interop\Queue\PsrMessage;
-use Interop\Queue\PsrProducer;
-use Interop\Queue\PsrQueue;
+use Interop\Queue\Context;
+use Interop\Queue\Message;
+use Interop\Queue\Producer;
+use Interop\Queue\Queue;
 use League\Tactician\Middleware;
 
 final class QueueMiddleware implements Middleware
 {
     /**
-     * @var PsrContext
+     * @var Context
      */
     private $context;
 
@@ -28,11 +28,11 @@ final class QueueMiddleware implements Middleware
     private $isQueueDeclared;
 
     /**
-     * @param PsrContext $context
+     * @param Context $context
      * @param string $queueName
      * @param bool $isQueueDeclared
      */
-    public function __construct(PsrContext $context, $queueName, $isQueueDeclared = false)
+    public function __construct(Context $context, $queueName, $isQueueDeclared = false)
     {
         $this->context = $context;
         $this->queueName = $queueName;
@@ -44,7 +44,7 @@ final class QueueMiddleware implements Middleware
      */
     public function execute($command, callable $next)
     {
-        if ($command instanceof PsrMessage) {
+        if ($command instanceof Message) {
             $this->context->createProducer()->send($this->createQueue(), $command);
 
             return $next(new QueuedMessage($command));
@@ -54,7 +54,7 @@ final class QueueMiddleware implements Middleware
     }
 
     /**
-     * @return PsrQueue
+     * @return Queue
      */
     protected function createQueue()
     {
@@ -77,7 +77,7 @@ final class QueueMiddleware implements Middleware
     }
 
     /**
-     * @return PsrProducer
+     * @return Producer
      */
     protected function createProducer()
     {

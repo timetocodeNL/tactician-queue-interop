@@ -2,12 +2,12 @@
 
 namespace Enqueue\Tactician;
 
-use Interop\Queue\PsrContext;
-use Interop\Queue\PsrMessage;
-use Interop\Queue\PsrProcessor;
+use Interop\Queue\Context;
+use Interop\Queue\Message;
+use Interop\Queue\Processor;
 use League\Tactician\CommandBus;
 
-class TacticianProcessor implements PsrProcessor
+class TacticianProcessor implements Processor
 {
     /**
      * @var CommandBus
@@ -25,7 +25,7 @@ class TacticianProcessor implements PsrProcessor
     /**
      * {@inheritdoc}
      */
-    public function process(PsrMessage $message, PsrContext $context)
+    public function process(Message $message, Context $context)
     {
         $this->commandBus->handle(new ReceivedMessage($message));
 

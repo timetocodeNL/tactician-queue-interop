@@ -2,13 +2,13 @@
 
 namespace Enqueue\Tactician;
 
-use Interop\Queue\PsrContext;
+use Interop\Queue\Context;
 use League\Tactician\Middleware;
 
 final class NormalizerMiddleware implements Middleware
 {
     /**
-     * @var PsrContext
+     * @var Context
      */
     private $context;
 
@@ -19,9 +19,9 @@ final class NormalizerMiddleware implements Middleware
 
     /**
      * @param Serializer $serializer
-     * @param PsrContext $context
+     * @param Context $context
      */
-    public function __construct(Serializer $serializer, PsrContext $context)
+    public function __construct(Serializer $serializer, Context $context)
     {
         $this->serializer = $serializer;
         $this->context = $context;

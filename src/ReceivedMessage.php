@@ -1,7 +1,7 @@
 <?php
 namespace Enqueue\Tactician;
 
-use Interop\Queue\PsrMessage;
+use Interop\Queue\Message;
 
 /**
  * Indicates that the message is received from a MQ broker.
@@ -9,20 +9,20 @@ use Interop\Queue\PsrMessage;
 final class ReceivedMessage
 {
     /**
-     * @var PsrMessage
+     * @var Message
      */
     private $message;
 
     /**
-     * @param PsrMessage $message
+     * @param Message $message
      */
-    public function __construct(PsrMessage $message)
+    public function __construct(Message $message)
     {
         $this->message = $message;
     }
 
     /**
-     * @return PsrMessage
+     * @return Message
      */
     public function getMessage()
     {
