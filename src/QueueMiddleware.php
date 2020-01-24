@@ -47,7 +47,7 @@ final class QueueMiddleware implements Middleware
         if ($command instanceof Message) {
             $this->context->createProducer()->send($this->createQueue(), $command);
 
-            return $next(new QueuedMessage($command));
+            return;
         }
 
         return $next($command);
